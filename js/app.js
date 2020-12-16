@@ -16,48 +16,15 @@
 /**
  * Define Global Variables
 */
-const sections = document.querySelectorAll('section');
+const sections = document.querySelectorAll('section'); //creates array of sections to be used in two functions
 
 /**
  * End Global Variables
- * Start Helper Functions
- * 
-*/
-
-const addActiveClassSection = function () {
-    sections.forEach (section =>
-        {const currentSection = section.getBoundingClientRect();       
-            if(currentSection.top >= 0 && currentSection.bottom <= ((document.documentElement.clientHeight) + 100)) {       
-            section.classList.add('your-active-class');
-            } else{      
-            section.classList.remove('your-active-class');       
-            }       
-        });  
-    };
-
-const addActiveNav = function ()  {
-    const navLinks = document.querySelectorAll('a');
-    navLinks.forEach(link => {
-        let section = document.querySelector('.your-active-class');
-        if (section !== null) {
-            let sectionId = `.` + section.id;
-            if (link.classList.contains(sectionId) === true) {
-                link.classList.add('active__nav');
-            } else {
-                link.classList.remove('active__nav');
-            }
-        }
-    });
-};
-/**
- * End Helper Functions
- * Begin Main Functions
- * 
-*/
+*/  
 
 // build the nav
 
-const buildNav = function () {
+buildNav = () => {
     sections.forEach(section=>{
         let listItem = document.createElement('li'); //creates new li element
         let sectionLink = document.createElement('a'); //creates link 
@@ -70,30 +37,50 @@ const buildNav = function () {
 };
 
 // Add class 'active' to section when near top of viewport
+addActiveClassSection = () => {
+    sections.forEach (section => //calls on each section
+        {const currentSection = section.getBoundingClientRect(); //tells bounding of the current section in loop       
+            if(currentSection.top >= 0 && currentSection.bottom <= ((document.documentElement.clientHeight) + 100)) {       
+            section.classList.add('your-active-class'); //adds class if in viewport
+            } else{      
+            section.classList.remove('your-active-class'); //removes class if not in viewport
+            }       
+        });  
+    };
 
-const activeSection = function () {
-    window.addEventListener('scroll', (event) => {
-    addActiveClassSection();
+addActiveNav = () => {
+    const navLinks = document.querySelectorAll('a'); //creates array of all links on page
+    navLinks.forEach(link => {
+        let section = document.querySelector('.your-active-class'); //defines section as one with active class
+        if (section !== null) { //only runs following if there is a section with an active class
+            let sectionId = `.` + section.id; //creates variable to check againt DOMTokenList
+            if (link.classList.contains(sectionId) === true) { //checks if section ID is in the DOMTokenList
+                link.classList.add('active__nav'); //adds active nav class if yes
+            } else {
+                link.classList.remove('active__nav'); //removes active nav class if no
+            }
+        }
     });
 };
 
-const activeNav = function () {
-    window.addEventListener('scroll', (event) => {
-    addActiveNav();
-    });
+activeSectionAndNav = () => { //listens for scroll and runs active section function and active nav function
+    window.addEventListener('scroll', function () {
+            addActiveClassSection();
+            addActiveNav();
+     });
 };
 
 
 // Scroll to anchor ID using scrollTO event
-const smoothScript = function () {
+smoothScript = () => {
     const smoothLinks = document.querySelectorAll('a'); //array of all links
     smoothLinks.forEach(anchor => //applys behavior to all links
-    anchor.addEventListener('click', function(e) { //adds event listner to link clicks
-    e.preventDefault(); //prevents jumping to link
+        anchor.addEventListener('click', function(e) { //adds event listner to link clicks
+        e.preventDefault(); //prevents jumping to link
 
-    document.querySelector(this.getAttribute('href')).scrollIntoView({ //calls scroll into view on items in document with href as an attribute
-    behavior: 'smooth'}); //makes scrolling behavior smooth
-    })
+        document.querySelector(this.getAttribute('href')).scrollIntoView({ //calls scroll into view on items in document with href as an attribute
+        behavior: 'smooth'}); //makes scrolling behavior smooth
+        })
     );
 };
 
@@ -108,5 +95,4 @@ buildNav();
 // Scroll to section on link click
 smoothScript();
 // Set sections as active
-activeSection();
-activeNav();
+activeSectionAndNav();
