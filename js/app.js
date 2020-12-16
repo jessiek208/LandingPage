@@ -40,7 +40,7 @@ buildNav = () => {
 addActiveClassSection = () => {
     sections.forEach (section => //calls on each section
         {const currentSection = section.getBoundingClientRect(); //tells bounding of the current section in loop       
-            if(currentSection.top >= 0 && currentSection.bottom <= ((document.documentElement.clientHeight) + 100)) {       
+            if(currentSection.top >= 0 && currentSection.bottom <= (document.documentElement.clientHeight)) {       
             section.classList.add('your-active-class'); //adds class if in viewport
             } else{      
             section.classList.remove('your-active-class'); //removes class if not in viewport
