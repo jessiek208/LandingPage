@@ -39,14 +39,15 @@ const addActiveNav = function ()  {
     const navLinks = document.querySelectorAll('a');
     navLinks.forEach(link => {
         let section = document.querySelector('.your-active-class');
-        let sectionId = `.` + section.id;
-        if (link.classList.contains(sectionId) === true) {
-            link.classList.add('active__nav');
-
-        } else {
-            link.classList.remove('active__nav');
+        if (section !== null) {
+            let sectionId = `.` + section.id;
+            if (link.classList.contains(sectionId) === true) {
+                link.classList.add('active__nav');
+            } else {
+                link.classList.remove('active__nav');
+            }
         }
-        });
+    });
 };
 /**
  * End Helper Functions
