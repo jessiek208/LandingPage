@@ -59,6 +59,8 @@ addActiveNav = () => {
             } else {
                 link.classList.remove('active__nav'); //removes active nav class if no
             }
+        } else if (window.scrollY === 0) { //removes active nav class if user returns to top of page
+            link.classList.remove('active__nav');
         }
     });
 };
